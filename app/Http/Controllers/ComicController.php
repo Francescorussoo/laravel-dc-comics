@@ -1,7 +1,8 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
+use App\Models\Comic;
 use Illuminate\Http\Request;
 
 class ComicController extends Controller
@@ -11,7 +12,8 @@ class ComicController extends Controller
      */
     public function index()
     {
-        //
+        $comics = Comic::all();
+        return view('comics.index', compact('comics'));
     }
 
     /**
@@ -19,7 +21,16 @@ class ComicController extends Controller
      */
     public function create()
     {
-        //
+        return view('comics.create');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $comic = Comic::findOrFail($id);
+        return view('comics.show', compact('comic'));
     }
 
     /**
@@ -27,38 +38,15 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'author' => 'required|string',
+            'publication_date' => 'required|date',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        Comic::create($data);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+        return redirect()->route('comics.index')->with('success', 'Fumetto creato con successo');
+    }  
 }
