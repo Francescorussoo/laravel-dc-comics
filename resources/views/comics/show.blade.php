@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('page-title', 'Dettagli Fumetto')
 
 @section('content')
     <h1>{{ $comic->title }}</h1>

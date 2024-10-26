@@ -40,9 +40,9 @@ class ComicController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'author' => 'required|string',
-            'publication_date' => 'required|date',
+            'description' => 'required|string|min:10',
+            'author' => 'required|string|max:100',
+            'publication_date' => 'required|date|before:tomorrow',
         ]);
 
         Comic::create($data);
@@ -65,15 +65,15 @@ class ComicController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'author' => 'required|string',
-            'publication_date' => 'required|date',
+            'description' => 'required|string|min:10',
+            'author' => 'required|string|max:100',
+            'publication_date' => 'required|date|before:tomorrow',
         ]);
 
         $comic = Comic::findOrFail($id);
         $comic->update($data);
 
-        return redirect()->route('comics.show', $comic->id)->with('success', 'Fumetto aggiornato con successo');
+        return redirect()->route('comics.show', $comic->id)->with('success', 'Fumetto aggiornato');
     }
 
     /**

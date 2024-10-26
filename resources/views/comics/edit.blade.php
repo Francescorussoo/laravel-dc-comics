@@ -1,10 +1,23 @@
 @extends('layouts.app')
+@section('page-title', 'Modifica Fumetto')
 
 @section('content')
     <h1>Modifica Fumetto</h1>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('comics.update', $comic->id) }}" method="POST">
         @csrf
         @method('PUT')
+        
         <label for="title">Titolo:</label>
         <input type="text" id="title" name="title" value="{{ $comic->title }}" required>
 

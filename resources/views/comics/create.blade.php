@@ -1,7 +1,19 @@
 @extends('layouts.app')
+@section('page-title', 'Aggiungi Fumetto')
 
 @section('content')
     <h1>Aggiungi un nuovo Fumetto</h1>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('comics.store') }}" method="POST">
         @csrf
         <label for="title">Titolo:</label>
